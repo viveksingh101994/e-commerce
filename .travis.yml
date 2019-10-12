@@ -6,4 +6,4 @@ before_install:
   - docker build -t ecomm:latest -f DockerFile.dev .
 
 script:
-  - docker run ecomm:latest npm run test -- --coverage
+  - docker run -e CI=true ecomm:latest npm run test -- --coverage
