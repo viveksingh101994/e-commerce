@@ -7,3 +7,12 @@ before_install:
 
 script:
   - docker run -e CI=true ecomm:latest npm run test -- --coverage
+
+deploy:
+  provider: heroku
+  api_key: ...
+  app: e-comm-live
+  run: "npm start"
+  strategy: git
+  on:
+    branch: master
