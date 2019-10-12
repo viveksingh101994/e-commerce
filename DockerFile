@@ -1,0 +1,21 @@
+FROM node:alpine as base-server
+WORKDIR /usr/app/
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+COPY ./server.js .
+
+FROM node:alpine as base-react
+WORKDIR /usr/app/client
+COPY ./client/package.json .
+COPY ./client/package-lock.json .
+RUN npm install
+COPY ./client/ .
+RUN npm run build
+
+FROM node:alpine as runtime
+WORKDIR /usr/app
+COPY --from=base-server ./usr/app .
+COPY --from=base-react ./usr/app/client/build ./client/build
+CMD ["npm","start"]
+
