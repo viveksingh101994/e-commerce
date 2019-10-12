@@ -10,9 +10,9 @@ script:
 
 deploy:
   provider: heroku
-  api_key: ...
   app: e-comm-live
-  run: "npm start"
+  run: "heroku-postbuild"
   strategy: git
   on:
     branch: master
+  api_key: $HEROKU_API_KEY
